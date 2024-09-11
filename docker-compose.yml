@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:apache
+    container_name: apache_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+
+#linux guarda sus datos en var
+#el software en etc
+#apache en var/html
+#/usr/local/apache2/htdocs/
+#./src:/usr/local/apache2/htdocs/ cambia la info del contenedor y la redirije a la carpeta src
+#para el contenedor, estamos trabajando en el, estamos linkeando las carpetas
+#contenedor: aplicación o servicio que tiene el código fuente de mi aplicación para lanzarla
+#tiene un sistema operativo para apoyarse

@@ -2,7 +2,7 @@
 
 ## Requisitos
 <ul>
-    <li>Docker compose
+    <li>Docker compose</li>
 </ul>
 
 ## Levatar el proyecto

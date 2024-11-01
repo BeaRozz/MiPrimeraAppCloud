@@ -1,8 +1,23 @@
-version: '3.8'
+# version: '3.8'
 
 services:
+  baseDeDatos:
+    image: mariadb:latest
+    container_name: base_de_datos
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: mi_primera_db
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3445:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+  
   web:
-    image: php:apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: apache_server
     ports:
       - "80:80"

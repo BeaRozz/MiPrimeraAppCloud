@@ -1,2 +1,6 @@
 #nombre_archivo que queremos ignorar
 .DS_Store
+
+.env
+
+db_data

@@ -19,12 +19,44 @@ Primer contenedor <br><br>
 ?> -->
 
 <?php
-// Datos de conexión
-$host = 'base_de_datos'; //Se puede usar el nombre de la base de datos
-$user = 'my_user'; // Reemplaza con tu usuario de base de datos
-$password = 'user_password'; // Reemplaza con tu contraseña de base de datos
-$dbname = 'mi_primera_db';
-$port = 3306;
+function loadEnv($path)
+{
+    if (!file_exists($path)) {
+        throw new Exception('El archivo .env no se encontró.');
+    }
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) {
+            continue; // Saltar los comentarios
+        }
+
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+
+        if (!array_key_exists($name, $_ENV)) {
+            putenv("$name=$value");
+            $_ENV[$name] = $value;
+        }
+    }
+}
+
+
+try {
+    loadEnv('../.env');
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+    exit;
+}
+
+// Asignar las variables de entorno a las variables PHP
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USERNAME'];
+$password = $_ENV['DB_PASSWORD'];
+$port = $_ENV['DB_PORT'];
+
 
 try {
     // Crear conexión usando PDO
